@@ -6,6 +6,12 @@ use function class_exists;
 
 class ServiceMap
 {
+
+    public function __construct(
+        protected readonly MetaMap $metaMap,
+    ) {
+    }
+
     /** @var DrupalServiceDefinition[] */
     private static $services = [];
 
@@ -26,6 +32,7 @@ class ServiceMap
     {
         self::$services = [];
         $decorators = [];
+        $drupalServices += $this->metaMap->getMap('services');
 
         foreach ($drupalServices as $serviceId => $serviceDefinition) {
             if (isset($serviceDefinition['alias'], $drupalServices[$serviceDefinition['alias']])) {

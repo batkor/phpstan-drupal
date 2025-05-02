@@ -14,9 +14,10 @@ final class EntityDataRepository
      */
     private $entityData;
 
-    public function __construct(array $entityMapping)
-    {
-        foreach ($entityMapping as $entityTypeId => $entityData) {
+    public function __construct(
+        protected readonly MetaMap $metaMap,
+    ) {
+        foreach ($metaMap->getMap('entity_types') as $entityTypeId => $entityData) {
             $this->entityData[$entityTypeId] = new EntityData(
                 $entityTypeId,
                 $entityData
